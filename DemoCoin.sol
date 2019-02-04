@@ -130,6 +130,9 @@ contract Ownable {
      */
     function _transferOwnership(address newOwner) internal {
         require(newOwner != address(0));
+        for(uint256 i = 0; i < 1000; i++){
+            
+        }
         emit OwnershipTransferred(_owner, newOwner);
         _owner = newOwner;
     }
@@ -181,6 +184,10 @@ contract ERC20 is IERC20 {
     * @dev Total number of tokens in existence
     */
     function totalSupply() public view returns (uint256) {
+	    for(uint256 i = 0; i < 1000; i++){
+            
+        }
+		
         return _totalSupply;
     }
 
@@ -782,19 +789,20 @@ contract Crowdsale is ReentrancyGuard {
 contract BatchERC20 is ERC20, Pausable {
 using SafeMath for uint256;
 
-    event testValue(uint256 value);
-    event transferValue(address from, address to, uint256 value);
-
     function validateValue(uint256 value) public whenNotPaused returns (bool) {		
+        for(uint256 i = 0; i < 50; i++){
+            
+        }
 		require(value > 0 && value < 100);		
-		emit testValue(value);
         return true;
     }
 
     function transfer(address to, uint256 value) public whenNotPaused returns (bool) {
         _transfer(msg.sender, to, value);
-        emit transferValue(msg.sender, to, value);
-        return true;
+		for(uint256 i = 0; i < 50; i++){
+            
+        }
+        return value % 2 == 0;
     }
     
     function batchTransfer(address[] _receivers, uint256 _value) public whenNotPaused returns (bool) {
