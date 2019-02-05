@@ -789,31 +789,25 @@ contract Crowdsale is ReentrancyGuard {
 contract BatchERC20 is ERC20, Pausable {
 using SafeMath for uint256;
 
-    function validateValue(uint256 value) public whenNotPaused returns (bool) {		
-        for(uint256 i = 0; i < 50; i++){
-            
-        }
-		require(value > 0 && value < 100);		
+    function validateValue(uint256 value) public whenNotPaused returns (bool) {
+        require(value > 0 && value < 100);
         return true;
     }
 
     function transfer(address to, uint256 value) public whenNotPaused returns (bool) {
         _transfer(msg.sender, to, value);
-		for(uint256 i = 0; i < 50; i++){
-            
-        }
-        return value % 2 == 0;
+        return true;
     }
     
     function batchTransfer(address[] _receivers, uint256 _value) public whenNotPaused returns (bool) {
         uint cnt = _receivers.length;
-        uint256 amount = uint256(cnt).mul(_value);
+        uint256 amount = uint256(cnt) * (_value);
         require(cnt > 0 && cnt <= 10);
         require(_value > 0 && _balances[msg.sender] >= amount);
 
-        _balances[msg.sender] = _balances[msg.sender].sub(amount);
+        _balances[msg.sender] = _balances[msg.sender] - amount;
         for (uint i = 0; i < cnt; i++) {
-            _balances[_receivers[i]] = _balances[_receivers[i]].add(_value);
+            _balances[_receivers[i]] = _balances[_receivers[i]] + _value;
             Transfer(msg.sender, _receivers[i], _value);
         }
         return true;
